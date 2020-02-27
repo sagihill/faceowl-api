@@ -7,6 +7,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+// knex package for implementing pg db
 const db = knex({
   	client: 'pg',
   	connection: {
@@ -19,11 +20,12 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.get('/', (req,res) => {res.send('This is working!');})
-app.post('/signin',signin.handleSignIn(db, bcrypt));
-app.post('/register',register.handleRegister(db, bcrypt));
-app.get('/profile/:id', profile.handleProfile(db));
-app.put('/image',image.handleImage(db));
-app.post('/imageURL',image.handleAPICall());
+app.get('/profile/:id', profile.handleProfile(db)); //profile route - currently no use, future profile page
+app.post('/signin',signin.handleSignIn(db, bcrypt)); //sign in route - invoking handleSignIn method
+app.post('/register',register.handleRegister(db, bcrypt)); //register route - invoking handleRegister method
+app.put('/image',image.handleImage(db)); // image route - handeling user rank increment
+app.post('/imageURL',image.handleAPICall()); // imageURL route - invoking clarifai api
 
-app.listen(process.env.PORT || 3000 , () => {console.log(`App is running on port ${process.env.PORT}`);})
+app.listen(process.env.PORT || 8080 , () => {console.log(`App is running on port ${process.env.PORT}`);})
+
 
