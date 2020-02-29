@@ -9,7 +9,9 @@ const app = new Clarifai.App({
 const handleAPICall = () => (req,res) => {
 	app.models
 		.predict(Clarifai.FACE_DETECT_MODEL,req.body.input)
-		.then(data => res.json(data))
+		 //using first face for calculation
+    	//can be scaled up for more than one face
+		.then(data => res.json(data.outputs[0].data.regions[0].region_info.bounding_box))
 		.catch(err => res.status(500).json('unable to work with Clarifai API'))
 }
 
