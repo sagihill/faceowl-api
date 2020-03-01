@@ -9,6 +9,8 @@ const handleSignIn = (db, bcrypt) => (req,res) => {
 		//checking the first row beacuse the db sends the user in an array
 		//checking if password matching the hash
 		const isValid = bcrypt.compareSync(password, data[0].hash);
+		console.log(bcrypt.hashSync(password));
+		console.log(data[0])
 		if (isValid) {
 			db.transaction(trx => {
 				trx.insert({
