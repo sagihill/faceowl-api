@@ -8,10 +8,10 @@ const handleRegister =(db, bcrypt) => (req,res) => {
 		//entering the user info into login table
 		db.transaction(trx => {
 			trx.insert({
-				hash: hash,
-				email: email
+				email: email,
+				time: new Date()
 			})
-			.into('login')
+			.into('logins')
 			.returning('email')
 			.then(email => {
 				//updating users table
