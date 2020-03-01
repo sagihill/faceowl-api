@@ -15,11 +15,12 @@ const handleRegister =(db, bcrypt) => (req,res) => {
 			.returning('email')
 			.then(email => {
 				//updating users table
-				return db('users')
+				return db('userinfo')
 				.returning('*')
 				.insert({
 					name: name,
 					email: email,
+					hash: hash,
 					joined: new Date()
 				})
 				.then(user => {
