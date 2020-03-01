@@ -9,15 +9,29 @@ const handleSignIn = (db, bcrypt) => (req,res) => {
 		//checking the first row beacuse the db sends the user in an array
 		//checking if password matching the hash
 		const isValid = bcrypt.compareSync(password, data[0].hash);
-		console.log(isValid)
 		if (isValid) {
-			//returning the user
-			return db.select('*').from('userinfo')
-			.where('email','=',email)
-			.then(user => {
-				res.json(user[0])
+			//entering the user info into login table
+			db.transaction(trx => {
+				trx.insert({
+					email: email,
+					time: new Date()
+				})
+				.into('logins')
+				.returning('email')
+				.then(loginEmail => {
+				//returning the user
+					return db.select('*').from('userinfo')
+					.where('email','=',email)
+					.then(user => {
+						res.json(user[0])
+					})
+				})
+				//commiting the transaction
+				.then(trx.commit)
+				//if error is catched rolling back the changes
+				.catch(trx.rollback)
 			})
-			.catch(err => res.status(422).json('Error getting user'))
+			.catch(err => res.status(422).json('Error login user'))
 		} else {
 			// if password doesnt match hash
 			res.status(401).json('Wrong credentials')
