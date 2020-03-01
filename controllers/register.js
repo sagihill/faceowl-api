@@ -13,13 +13,14 @@ const handleRegister =(db, bcrypt) => (req,res) => {
 			})
 			.into('logins')
 			.returning('email')
-			.then(email => {
+			.then(loginEmail => {
 				//updating users table
-				return db('users')
+				return db('userinfo')
 				.returning('*')
 				.insert({
 					name: name,
 					email: email,
+					hash: hash,
 					joined: new Date()
 				})
 				.then(user => {
