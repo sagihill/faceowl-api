@@ -18,7 +18,7 @@ const handleAPICall = () => (req,res) => {
 //method for incrementing user rank
 const handleImage = (db) =>  (req,res) => {
 	const { id } = req.body;
-	db('users').where({id})
+	db('userinfo').where({id})
 		.increment('entries',1)
 		.returning('entries')
 		.then( entries => {
