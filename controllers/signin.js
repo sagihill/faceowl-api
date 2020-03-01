@@ -36,8 +36,8 @@ const handleSignIn = (db, bcrypt) => (req,res) => {
 			// if password doesnt match hash
 			res.status(401).json('Wrong credentials')
 		}	 
-		.catch(err => res.status(422).json('Unable to sign in'))
-	}
+	})
+	.catch(err => res.status(422).json('Unable to sign in'))
 }
 
 module.exports = {
