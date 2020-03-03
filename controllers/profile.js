@@ -1,6 +1,8 @@
+//profile method
+//currently there is no frontend implemtation for this capabilty
 const handleProfile = (db) => (req,res) => {
 	const { id } = req.params;
-	db.select('*').from('users').where({id})
+	db.select('*').from('userinfo').where({id})
 		.then( user => {
 			if(user.length) {
 				res.json(user[0]);

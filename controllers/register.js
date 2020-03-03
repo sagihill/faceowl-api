@@ -1,3 +1,7 @@
+//registration method
+//the input is the user info
+//the output is login and userinfo database insertion
+//the method also return the registred user for signin process
 const handleRegister =(db, bcrypt) => (req,res) => {
 	const {email, name, password} = req.body;
 	if(!email || !name || !password){

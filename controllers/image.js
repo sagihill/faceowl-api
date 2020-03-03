@@ -5,7 +5,8 @@ const app = new Clarifai.App({
  apiKey: 'ef9d4bc6225d4fbe8e3bf77f4c442504'
 });
 
-//method for finding faces
+//the method for using the face recogintion api
+//the input is the image url
 const handleAPICall = () => (req,res) => {
 	app.models
 		.predict(Clarifai.FACE_DETECT_MODEL,req.body.input)
@@ -16,7 +17,7 @@ const handleAPICall = () => (req,res) => {
 }
 
 //method for incrementing user rank
-const handleImage = (db) =>  (req,res) => {
+const handleUserRankIncrement = (db) =>  (req,res) => {
 	const { id } = req.body;
 	db('userinfo').where({id})
 		.increment('entries',1)

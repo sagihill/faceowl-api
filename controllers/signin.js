@@ -1,3 +1,7 @@
+//sign in method
+//the input is the logging user info
+//the output is login database insertion
+//the method also return the user for signin process
 const handleSignIn = (db, bcrypt) => (req,res) => {
 	const {email, password} = req.body;
 	if(!email || !password) {
