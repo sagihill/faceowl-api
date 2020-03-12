@@ -29,6 +29,6 @@ const handleUserRankIncrement = (db) =>  (req,res) => {
 }
 
 module.exports = {
-	handleImage,
+	handleUserRankIncrement,
 	handleAPICall
 };
